@@ -116,6 +116,37 @@ This backend demonstrates:
 - ✅ Middleware usage
 - ✅ Schema validation
 
+## ⚠️ Security Considerations
+
+**Note**: This is an educational project. For production use, add:
+
+1. **Rate Limiting** - Prevent API abuse
+   ```bash
+   npm install express-rate-limit
+   ```
+   ```javascript
+   const rateLimit = require('express-rate-limit');
+   const limiter = rateLimit({
+     windowMs: 15 * 60 * 1000, // 15 minutes
+     max: 100 // limit each IP to 100 requests per windowMs
+   });
+   app.use('/api/', limiter);
+   ```
+
+2. **Input Validation** - Validate and sanitize all inputs
+   ```bash
+   npm install express-validator
+   ```
+
+3. **Authentication** - Protect routes with JWT or session-based auth
+4. **HTTPS** - Use SSL/TLS in production
+5. **Helmet** - Security headers middleware
+   ```bash
+   npm install helmet
+   ```
+
+6. **MongoDB Injection Protection** - Mongoose provides this by default, but always validate inputs
+
 ## 🐛 Troubleshooting
 
 **MongoDB Connection Error:**

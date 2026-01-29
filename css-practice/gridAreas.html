@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: grid;
+            height: 100vh;
+            background-color: aquamarine;
+            grid-template-areas: 
+            "top top top top"
+            "nav content sidebar sidebar2"
+            "nav footer footer footer";
+            grid-template-columns: 1fr 4fr 1fr 1fr;
+            grid-template-rows: 1fr 6fr 1fr;
+        }
+
+        header{
+            grid-area: top;
+            padding: 2rem;
+            border: 1px solid snow;
+        }
+
+        main{
+            grid-area: content;
+            padding: 2rem;
+            border: 1px solid snow;
+        }
+
+        nav{
+            grid-area: nav;
+            padding: 2rem;
+            border: 1px solid snow;
+        }
+
+        aside{
+            grid-area: sidebar;
+            padding: 2rem;
+            border: 1px solid snow;
+        }
+
+        .sidebar2{
+            grid-area: sidebar2;
+            padding: 2rem;
+            border: 1px solid snow;
+        }
+
+        footer{
+            grid-area: footer;
+            padding: 2rem;
+            border: 1px solid snow; 
+        }
+    </style>
+</head>
+<body>
+    <header>Header</header>
+    <main>Content</main>
+    <nav>Navigation</nav>
+    <aside>Sidebar</aside>
+    <div class="sidebar2">Sidebar</div>
+    <footer>Footer</footer>
+</body>
+
+</html>

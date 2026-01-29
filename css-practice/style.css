@@ -1,0 +1,22 @@
+body{
+    border: 10px solid darkgray;
+}
+h1{
+    background-color: darkgray;
+    text-align: center;
+    margin-top: 0px;
+}
+
+section{
+    padding: 0px 10px 0px;
+}
+
+body section{
+    color: blueviolet;
+    font-style: italic;
+}
+
+.container{
+    color: blue;
+    font-size: normal;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban</title>
+    <link rel="stylesheet" href="kanban.css">
+</head>
+<body>
+    <div class="tool-container">
+        <div class="tool-priority-container">
+            <div class="turquoise color"></div>
+            <div class="skyaqua color"></div>
+            <div class="rosekiss color"></div>
+            <div class="thistle color"></div>
+        </div>
+        <div class="tool-btn-container">
+            <div class="add-btn">
+                <i class="fa-solid fa-circle-plus"></i>
+            </div>
+            <div class="remove-btn">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+        </div>
+    </div>
+    <div class="main-container">
+        <!-- <div class="ticket-container">
+            <div id="ticket-id">1234</div>
+            <div class="ticket-description">Ticket Description</div>
+            <i class="fa-solid fa-lock" data-locked="true"></i>
+            <i class="fa-solid fa-lock-open" data-locked="false"></i>
+        </div> -->
+    </div>
+    <div class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Add new task</h1>
+            </div>
+            <div class="close-modal">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+            <div class="modal-body">
+                <textarea name="taskDescription" id="input-task-desc" placeholder="Enter your task details"></textarea>
+                <div class="modal-priority-container">
+                    <div class="turquoise priority-color">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="skyaqua priority-color"></div>
+                    <div class="rosekiss priority-color"></div>
+                    <div class="thistle priority-color"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-cancel-btn">Cancel</button>
+                <button id="modal-submit-btn">Submit</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://kit.fontawesome.com/e92d2b3336.js" crossorigin="anonymous"></script>
+<script src="./kanban.js"></script>
+<script src="https://unpkg.com/shortid-dist@1.0.5/dist/shortid-2.2.13.min.js"></script>
+</html>

@@ -13,6 +13,8 @@ const colorCheckMark = '<i class="fa-solid fa-check"></i>';
 
 const colorList = ["turquoise", "skyaqua", "rosekiss", "thistle"];
 
+let ticketData = {};
+
 let deleteTaskActive = false;
 
 addBtn.addEventListener("click", function (event) {
@@ -28,6 +30,10 @@ modalCancelButton.addEventListener("click", function (event) {
 });
 
 modalSubmitButton.addEventListener("click", (event) => {
+  if(!textAreaField.value){
+    alert("Add task description to submit");
+    return;
+  }
   createTask();
   modalOverlayCont.style.display = "none";
   textAreaField.value = "";
@@ -41,9 +47,9 @@ modalSubmitButton.addEventListener("click", (event) => {
 
 removeBtn.addEventListener("click", function (event) {
   deleteTaskActive = !deleteTaskActive;
-  if(deleteTaskActive){
-      event.currentTarget.classList.add("remove-btn-active");
-  }else{
+  if (deleteTaskActive) {
+    event.currentTarget.classList.add("remove-btn-active");
+  } else {
     event.currentTarget.classList.remove("remove-btn-active");
   }
 });
@@ -75,6 +81,20 @@ function addColorEvent(elementSelector) {
   }
 }
 
+function getTicketData() {
+  ticketData = JSON.parse(localStorage.getItem("ticketData"));
+  console.log(ticketData);
+  if (ticketData != null) {
+    for (const ticket of Object.entries(ticketData)) {
+      modelTicket(ticket[1]);
+    }
+  }
+}
+
+function saveTicketData() {
+  localStorage.setItem("ticketData", JSON.stringify(ticketData));
+}
+
 function createTask() {
   let colorSelected = "";
   for (let colorElement of modalcolorSelector) {
@@ -82,40 +102,65 @@ function createTask() {
       colorSelected = colorElement.getAttribute("class").split(" ")[0];
     }
   }
+  let ticketId = crypto.randomUUID();
+  let ticketObj = {
+    ticketId: ticketId,
+    ticketDescription: textAreaField.value,
+    ticketColor: colorSelected,
+  };
+  ticketData = {
+    ...ticketData,
+    [ticketId]: ticketObj,
+  };
+  modelTicket(ticketObj);
+  saveTicketData(ticketData);
+}
+
+function modelTicket(ticket) {
   let ticketContainer = document.createElement("div");
   ticketContainer.setAttribute("class", "ticket-container");
   ticketContainer.innerHTML = `
-        <div id="ticket-id">1234</div>
-        <div class="ticket-description">${textAreaField.value}</div>
-        <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
-    `;
-  ticketContainer.classList.add(colorSelected);
+      <div id="ticket-id">${ticket.ticketId}</div>
+      <div class="ticket-description">${ticket.ticketDescription}</div>
+      <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
+  `;
+  ticketContainer.classList.add(ticket.ticketColor);
   ticketContainer.classList.add("ticket-container-active");
+  ticketContainer.setAttribute("ticket-id", ticket.ticketId);
   addDeleteListener(ticketContainer);
   addLockListener(ticketContainer);
   mainContainer.appendChild(ticketContainer);
 }
 
-function addDeleteListener(ticketContainer){
-    ticketContainer.addEventListener("click", function(event) {
-    if(deleteTaskActive){
-        ticketContainer.remove();
+function addDeleteListener(ticketContainer) {
+  ticketContainer.addEventListener("click", function (event) {
+    if (deleteTaskActive) {
+      let currTicketId = ticketContainer.getAttribute("ticket-id");
+      delete ticketData[currTicketId];
+      ticketContainer.remove();
+      saveTicketData();
     }
   });
 }
 
-function addLockListener(ticketContainer){
-    //<i class="fa-solid fa-lock-open"></i>
-    const lockButton = ticketContainer.querySelector(".lock-icon > i");
-    lockButton.addEventListener("click", function(event){
-        if(lockButton.classList.contains("fa-lock")){
-            lockButton.classList.replace("fa-lock", "fa-lock-open");
-            ticketContainer.setAttribute("contenteditable","true");
-        }else{
-            lockButton.classList.replace("fa-lock-open","fa-lock");
-            ticketContainer.setAttribute("contenteditable","false");
-        }
-    });
+function addLockListener(ticketContainer) {
+  //<i class="fa-solid fa-lock-open"></i>
+  const lockButton = ticketContainer.querySelector(".lock-icon > i");
+  lockButton.addEventListener("click", function (event) {
+    if (lockButton.classList.contains("fa-lock")) {
+      lockButton.classList.replace("fa-lock", "fa-lock-open");
+      ticketContainer.setAttribute("contenteditable", "true");
+    } else {
+      lockButton.classList.replace("fa-lock-open", "fa-lock");
+      ticketContainer.setAttribute("contenteditable", "false");
+      const textAreaField = ticketContainer.querySelector(
+        ".ticket-description",
+      );
+      let currTicketId = ticketContainer.getAttribute("ticket-id");
+      ticketData[currTicketId].ticketDescription = textAreaField.textContent;
+      saveTicketData();
+    }
+  });
 }
 
 function filterTask(selectedColor, isColorSelected) {
@@ -134,3 +179,4 @@ function filterTask(selectedColor, isColorSelected) {
 
 addColorEvent(colorSelector);
 addColorEvent(modalcolorSelector);
+getTicketData();

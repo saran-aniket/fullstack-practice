@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import scenery from "../assets/scenery.jpg";
 import axios from "axios";
-import { apiKey } from "../constants/app-constants";
+import { apiKey } from "../../constants/app-constants";
 
 function Banner() {
     const [bannerImage, setBannerImage] = useState();

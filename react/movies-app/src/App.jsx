@@ -1,7 +1,7 @@
 import './App.css'
 import NavBar from './components/NavBar'
-import Watchlist from './components/Watchlist'
-import Home from './components/Home'
+import Watchlist from './features/watchlist/Watchlist'
+import Home from './features/home/Home'
 import {Routes, Route} from 'react-router-dom'
 
 function App() {

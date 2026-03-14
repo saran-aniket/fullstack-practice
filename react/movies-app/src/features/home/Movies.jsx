@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Pagination from "./Pagination";
+import Pagination from "../../components/Pagination";
 import axios from "axios";
-import { apiKey } from "../constants/app-constants";
+import { apiKey } from "../../constants/app-constants";
 
 function Movies() {
     const [pageNo, setPageNo] = useState(1);

@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { genreIds } from "../../constants/app-constants";
+import {WatchListContext} from "../../context/WatchListContext";
 
 function Watchlist() {
-    const [watchList, setWatchList] = useState(() => {
-        let fetchWatchList = localStorage.getItem("watchList");
-        if (fetchWatchList) {
-            return JSON.parse(fetchWatchList);
-        } else {
-            return [];
-        }
-    });
+    // const [watchList, setWatchList] = useState(() => {
+    //     let fetchWatchList = localStorage.getItem("watchList");
+    //     if (fetchWatchList) {
+    //         return JSON.parse(fetchWatchList);
+    //     } else {
+    //         return [];
+    //     }
+    // });
+    // console.log("context", useContext(WatchListContext));
+    
+    const {watchList, setWatchList} = useContext(WatchListContext);
     const [category, setCategory] = useState("");
     const [categoryList, setCategoryList] = useState([]);
     const [searchInput, setSearchInput] = useState([]);
@@ -116,7 +120,7 @@ function Watchlist() {
                             })
                             .map((movieObj) => {
                                 return (
-                                    <tr key={movieObj.id}>
+                                    <tr key={movieObj.id} className="hover:bg-gray-200">
                                         <td className="m-4 flex justify-normal items-center gap-8">
                                             <img
                                                 src={`https://image.tmdb.org/t/p/original/${movieObj.backdrop_path}`}

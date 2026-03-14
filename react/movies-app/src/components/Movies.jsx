@@ -8,20 +8,30 @@ import { apiKey } from "../constants/app-constants";
 function Movies() {
     const [pageNo, setPageNo] = useState(1);
     const [movies, setMovies] = useState([]);
-    const [watchList, setWatchList] = useState([]);
+    const [watchList, setWatchList] = useState(() => {
+        let fetchWatchList = localStorage.getItem("watchList");
+        if (fetchWatchList) {
+            return JSON.parse(fetchWatchList);
+        } else {
+            return [];
+        }
+    });
 
-    console.log(watchList);
+    console.log(movies);
 
     useEffect(() => {
         axios
-            .get("https://api.themoviedb.org/3/trending/movie/day", {
-                headers: { Authorization: `Bearer ${apiKey}` },
-            })
+            .get(
+                `https://api.themoviedb.org/3/movie/top_rated?page=${pageNo}`,
+                {
+                    headers: { Authorization: `Bearer ${apiKey}` },
+                },
+            )
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 setMovies(response.data.results);
             });
-    }, []);
+    }, [pageNo]);
 
     const handleNextPageFn = () => {
         setPageNo(pageNo + 1);
@@ -37,16 +47,21 @@ function Movies() {
     const addToWatchList = (movieObj) => {
         let updatedWatchList = [...watchList, movieObj];
         setWatchList(updatedWatchList);
-    }
+        localStorage.setItem("watchList", JSON.stringify(updatedWatchList));
+    };
 
     const removeFromWatchList = (movieObj) => {
-        setWatchList(watchList.filter((item) => item.id !== movieObj.id));
-    }
+        let updatedWatchList = watchList.filter(
+            (item) => item.id !== movieObj.id,
+        );
+        setWatchList(updatedWatchList);
+        localStorage.setItem("watchList", JSON.stringify(updatedWatchList));
+    };
 
     return (
         <>
             <div className="mx-5">
-                <p className="font-bold pb-5">Trending Movies</p>
+                <p className="font-bold pb-5">Top Rated</p>
                 <div className="flex flex-wrap justify-evenly gap-8">
                     {movies.map((movieObj) => {
                         return (

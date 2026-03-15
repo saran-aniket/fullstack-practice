@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { genreIds } from "../../constants/app-constants";
 import {WatchListContext} from "../../context/WatchListContext";
 
@@ -15,18 +15,15 @@ function Watchlist() {
     
     const {watchList, setWatchList} = useContext(WatchListContext);
     const [category, setCategory] = useState("");
-    const [categoryList, setCategoryList] = useState([]);
-    const [searchInput, setSearchInput] = useState([]);
-
-    useEffect(() => {
+    const [categoryList] = useState(() => {
         let temp = watchList.map((movie) => {
             return genreIds[movie.genre_ids[0]];
         });
         // set stores only the unique entries
-        temp = new Set(temp);
-        console.log(temp);
-        setCategoryList(["All Genres", ...temp]);
-    }, [watchList]);
+        return ["All Genres", ...new Set(temp)];
+    });
+    const [searchInput, setSearchInput] = useState([]);
+
 
     const handleRatingSortAsc = () => {
         watchList.sort((a, b) => a.vote_average - b.vote_average);

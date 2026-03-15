@@ -1,5 +1,5 @@
 export const apiKey =
-    "";
+    "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjNhMmRhNzYzNWY5MGEzMzE5YjkzYjhhYzIwMjU5OSIsIm5iZiI6MTc3MzMyMjMwOS41MjQsInN1YiI6IjY5YjJjMDQ1YWM2OTY2YjY4YjIxZDY3NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._wt1P4693UV-_AdI7Lollhkw5ZsQL-D9LfF9SjY4F4g";
 
 export const genreIds = {
     28: "Action",
